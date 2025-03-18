@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/dbuharov/4-sprint-final/internal/spentcalories"
+	"github.com/Yandex-Practicum/go1fl-4-sprint-final/internal/spentcalories"
 )
 
 var (
