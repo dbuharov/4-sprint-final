@@ -17,7 +17,7 @@ const (
 	cmInM     = 100   // количество сантиметров в метре.
 )
 
-func parseTraining(data string) (int, string, time.Duration, error) { //"3456,Ходьба,3h00m" формат на входе
+func parseTraining(data string) (int, string, time.Duration, error) {
 	// ваш код
 	var activity string //создали переменную для удобства чтения и понимания кода
 	var actTime time.Duration
