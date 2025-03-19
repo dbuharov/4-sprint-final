@@ -10,6 +10,8 @@ import (
 	"github.com/Yandex-Practicum/go1fl-4-sprint-final/internal/spentcalories"
 )
 
+const kilometr float64 = 1000
+
 var (
 	StepLength = 0.65 // длина шага в метрах
 )
@@ -46,13 +48,13 @@ func DayActionInfo(data string, weight, height float64) string {
 	steps, duration, err := parsePackage(data) //1. получили данные
 	if err != nil {
 		fmt.Printf("Error receiving data %v\n", err)
-		return err.Error()
+		return ""
 	}
 	if steps <= 0 { //2. проверили кол-во шагов
-		return " "
+		return ""
 	}
 	distance := float64(steps) * StepLength                                                                                        //3. дистанция в метрах
-	kmdistance := distance / 1000                                                                                                  //4. перевели дистанцию в километры
+	kmdistance := distance / kilometr                                                                                              //4. перевели дистанцию в километры
 	calories := spentcalories.WalkingSpentCalories(steps, weight, height, duration)                                                //5.получили количество калорий
 	return fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n", steps, kmdistance, calories) //6.
 }

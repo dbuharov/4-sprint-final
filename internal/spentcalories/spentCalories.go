@@ -78,8 +78,8 @@ func TrainingInfo(data string, weight, height float64) string { //"3456,Ходь
 	var calories float64
 	steps, activity, actTime, err := parseTraining(data) // 1. получаем данные
 	if err != nil {
-		fmt.Printf("%v", err)
-		return ""
+		fmt.Println(err)
+		return err.Error()
 	}
 	switch activity { //2. получаем тип тренировки
 	case "Бег": //3. Бег
@@ -88,9 +88,9 @@ func TrainingInfo(data string, weight, height float64) string { //"3456,Ходь
 		dist = distance(steps)
 
 	case "Ходьба": //3. ходьба
-		// = WalkingSpentCalories(steps, weight, height, actTime)
-		// = meanSpeed(steps, actTime)
-		//distance = distance(steps)
+		calories = WalkingSpentCalories(steps, weight, height, actTime)
+		speed = meanSpeed(steps, actTime)
+		dist = distance(steps)
 
 	default:
 		return "неизвестный тип тренировки" // если что-то пошло не так
@@ -113,8 +113,8 @@ const (
 // duration time.Duration — длительность тренировки.
 func RunningSpentCalories(steps int, weight float64, duration time.Duration) float64 {
 	// ваш код здесь
-	meanSpeed := meanSpeed(steps, duration)                                                            //1. получаем среднюю скорость
-	return ((runningCaloriesMeanSpeedMultiplier * meanSpeed) - runningCaloriesMeanSpeedShift) * weight // получаем калории
+	runSpeed := meanSpeed(steps, duration)                                                            //1. получаем среднюю скорость
+	return ((runningCaloriesMeanSpeedMultiplier * runSpeed) - runningCaloriesMeanSpeedShift) * weight // получаем калории
 }
 
 // Константы для расчета калорий, расходуемых при ходьбе.
@@ -133,6 +133,6 @@ const (
 // height float64 — рост пользователя.
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) float64 {
 	// ваш код здесь
-	meanSpeed := meanSpeed(steps, duration)
-	return ((walkingCaloriesWeightMultiplier * weight) + (meanSpeed*meanSpeed/height)*walkingSpeedHeightMultiplier) * duration.Hours() * minInH
+	walkSpeed := meanSpeed(steps, duration)
+	return ((walkingCaloriesWeightMultiplier * weight) + (walkSpeed*walkSpeed/height)*walkingSpeedHeightMultiplier) * duration.Hours() * minInH
 }
